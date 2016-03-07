@@ -11,11 +11,111 @@ $(document).ready(function () {
         
         If you don't need the config data, you don't need to call gadget.fetch().
     */
+    var apihost;
+    var token;
+
+    var checkedOutContent = [];
+
+    // global vars:
     gadget.ready().then(gadget.fetch).then(function () {
-        
-        $("#status").html("Gadget Loaded.");
+       
+       //set variables:
+        apihost = gadget.get('apihost');
+        token = gadget.get('token');        
+
+       
+        // do stuff...
+        getListOfSites();
+
+    });
+
+
+    // http://a.cms.omniupdate.com/sites/list
+    function getListOfSites(){
+
+        $.ajax({
+            dataType: "json",
+            url: apihost + "/sites/list",
+            data: {"authorization_token" : token },
+            success: function(recievedData){
+                for (i = 0; i < recievedData.length; i++) {
+                    var currentSite = recievedData[i].site;
+
+                    getCheckedOutContentInSite(currentSite);
+                    checkedOutContent[currentSite] = [];
+                }
+
+            }
+        });
+
+    }
+
+    // http://a.cms.omniupdate.com/files/checkedout?site=www
+    function getCheckedOutContentInSite(getSite){
+
+        $.ajax({
+            dataType: "json",
+            url: apihost + "/files/checkedout?site=" + getSite,
+            data: {"authorization_token" : token },
+            success: function(data){    
+
+                $("table#checkedOut").append("<tr><td class=\"site\">" + getSite + 
+                    "</td><td class=\"count\">" + data.length + 
+                    " files<td><a class=\"btn " + (data.length == 0 && "disabled") +  " btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
+
+                checkedOutContent[getSite] = data;
+            }
+            
+        });
+
+    }
+
+    function checkInContent(contentArray){
+
+        for (i = 0; i < contentArray.length; i++) {
+            checkInSingleContent(contentArray[i]);
+        }
+    }
+
+    //http://a.cms.omniupdate.com/files/checkin
+    function checkInSingleContent(contentObject){
+        $.ajax({
+            dataType: "json",
+            url: apihost + "/files/checkin",
+            type: "POST",
+            data: {
+                "authorization_token" : token,
+                "site" : contentObject.site,
+                "path" : contentObject.path,
+            },
+            success: function(data){    
+                //Do something
+            }
+            
+        });
+    }
+
+
+    // EVENT HANDLERS:
+
+    $(document).on("click", ".check-in", function(){
+        var clickedRow = $(this).parent().parent();
+        var clickedSite = $(clickedRow).find(".site").html();
+
+        // reset view:
+        checkInContent(checkedOutContent[clickedSite]);
+        $(clickedRow).find(".count").html("0 files");
+        $(clickedRow).find(".btn").addClass("disabled");
         
     });
+
+    $("#refresh").click(function(){
+        console.log("refreshing");
+        $("table#checkedOut tbody").html(" ");
+        checkedOutContent = [];
+        getListOfSites()
+    });
+
 });
 
 $(gadget).on({
