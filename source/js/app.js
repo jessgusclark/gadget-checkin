@@ -61,7 +61,7 @@ $(document).ready(function () {
 
                 $("table#checkedOut").append("<tr><td class=\"site\">" + getSite + 
                     "</td><td class=\"count\">" + data.length + 
-                    " files<td><a class=\"btn " + (data.length == 0 && "disabled") +  " btn-default btn-sm check-in\">Check In</a></td></tr>" );
+                    " files<td><a class=\"btn " + (data.length == 0 && "disabled") +  " btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
 
                 checkedOutContent[getSite] = data;
             }
