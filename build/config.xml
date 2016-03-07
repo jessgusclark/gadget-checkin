@@ -2,13 +2,13 @@
 
 <config>
     <!-- The title that appears in the gadget's title bar. -->
-    <entry key="title" label="Title">Gadget Starter</entry>
+    <entry key="title" label="Title">CheckIn Gadget</entry>
     
     <!-- The URL of an icon image. -->
-    <entry key="icon" private="true">http://commons.omniupdate.com/favicon.ico</entry>
+    <entry key="icon" private="true">icon-stack-checkmark</entry>
     
     <!-- The description that appears in the gadget chooser. -->
-    <entry key="description" private="true">What my gadget does.</entry>
+    <entry key="description" private="true">CheckIn multiple pieces of content at once.</entry>
     
     <!-- The URL of a thumbnail image to appear in the gadget chooser. -->
     <entry key="thumbnail" private="true">http://fakeimg.pl/96/</entry>
@@ -31,11 +31,6 @@
     <!-- For sidebar gadgets only. Determines the initial height of the gadget in pixels. -->
     <entry key="initial_height" private="true">290</entry>
     
-    <!-- Below is a custom config entry. Custom entries are for the gadget's internal use only.
-         You can add as many custom entries as you wish. The "private" and "overwritable" flags
-         apply to custom entries too. -->
-    <entry key="font_size" label="Font Size" overwritable="true">14px</entry>
-
 </config>
 
 

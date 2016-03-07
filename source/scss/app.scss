@@ -4,3 +4,17 @@ body {
     margin: 10px;
     background-color: transparent;
 }
+
+table#checkedOut {
+	width:100%;
+}
+
+table#checkedOut thead th {
+	padding: 2px 5px;
+	border-bottom:2px solid #737676;
+}
+
+table#checkedOut tr td {
+	padding: 2px 5px;
+	border-bottom:1px solid #ebebeb;
+}
