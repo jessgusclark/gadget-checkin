@@ -45,7 +45,6 @@ $(document).ready(function () {
                     checkedOutContent[currentSite] = [];
                 }
 
-                console.log(checkedOutContent);
             }
         });
 
@@ -70,17 +69,6 @@ $(document).ready(function () {
         });
 
     }
-    
-    $(document).on("click", ".check-in", function(){
-        var clickedRow = $(this).parent().parent();
-        var clickedSite = $(clickedRow).find(".site").html();
-
-        // reset view:
-        checkInContent(checkedOutContent[clickedSite]);
-        $(clickedRow).find(".count").html("0 files");
-        $(clickedRow).find(".btn").addClass("disabled");
-        
-    });
 
     function checkInContent(contentArray){
 
@@ -106,6 +94,27 @@ $(document).ready(function () {
             
         });
     }
+
+
+    // EVENT HANDLERS:
+
+    $(document).on("click", ".check-in", function(){
+        var clickedRow = $(this).parent().parent();
+        var clickedSite = $(clickedRow).find(".site").html();
+
+        // reset view:
+        checkInContent(checkedOutContent[clickedSite]);
+        $(clickedRow).find(".count").html("0 files");
+        $(clickedRow).find(".btn").addClass("disabled");
+        
+    });
+
+    $("#refresh").click(function(){
+        console.log("refreshing");
+        $("table#checkedOut tbody").html(" ");
+        checkedOutContent = [];
+        getListOfSites()
+    });
 
 });
 
