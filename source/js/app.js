@@ -37,16 +37,17 @@ $(document).ready(function () {
             dataType: "json",
             url: apihost + "/sites/list",
             data: {"authorization_token" : token },
-            success: function(recievedData){
-                for (i = 0; i < recievedData.length; i++) {
-                    var currentSite = recievedData[i].site;
-
-                    getCheckedOutContentInSite(currentSite);
-                    checkedOutContent[currentSite] = [];
-                }
-
-            }
+            success: getListOfSitesSuccess
         });
+
+    }
+
+    function getListOfSitesSuccess(recievedData){
+        // Loop through recievedData and add to array:
+        for (i = 0; i < recievedData.length; i++) {
+            checkedOutContent[recievedData[i].site] = [];
+            getCheckedOutContentInSite(recievedData[i].site);
+        }
 
     }
 
@@ -57,17 +58,18 @@ $(document).ready(function () {
             dataType: "json",
             url: apihost + "/files/checkedout?site=" + getSite,
             data: {"authorization_token" : token },
-            success: function(data){    
-
-                $("table#checkedOut").append("<tr><td class=\"site\">" + getSite + 
-                    "</td><td class=\"count\">" + data.length + 
-                    " files<td><a class=\"btn " + (data.length == 0 && "disabled") +  " btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
-
-                checkedOutContent[getSite] = data;
-            }
-            
+            success: function(recievedData){
+                getCheckedOutContentInSiteSuccess(recievedData, getSite)
+            }            
         });
+    }
 
+    function getCheckedOutContentInSiteSuccess(recievedData, getSite){
+        $("table#checkedOut").append("<tr><td class=\"site\">" + getSite + 
+            "</td><td class=\"count\">" + recievedData.length + 
+            " files<td><a class=\"btn " + (recievedData.length == 0 && "disabled") +  " btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
+
+        checkedOutContent[getSite] = recievedData;
     }
 
     function checkInContent(contentArray){
