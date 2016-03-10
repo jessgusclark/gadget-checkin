@@ -43,12 +43,16 @@ $(document).ready(function () {
     }
 
     function getListOfSitesSuccess(recievedData){
+        var keys = [];
         // Loop through recievedData and add to array:
         for (i = 0; i < recievedData.length; i++) {
             checkedOutContent[recievedData[i].site] = [];
             getCheckedOutContentInSite(recievedData[i].site);
+
+            keys.push(recievedData[i].site);
         }
 
+        addSitesToTable(keys);
     }
 
     // http://a.cms.omniupdate.com/files/checkedout?site=www
@@ -59,17 +63,26 @@ $(document).ready(function () {
             url: apihost + "/files/checkedout?site=" + getSite,
             data: {"authorization_token" : token },
             success: function(recievedData){
-                getCheckedOutContentInSiteSuccess(recievedData, getSite)
+                //getCheckedOutContentInSiteSuccess(recievedData, getSite)
+                checkedOutContent[getSite] = recievedData;
+                $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + " files");
             }            
         });
     }
 
-    function getCheckedOutContentInSiteSuccess(recievedData, getSite){
-        $("table#checkedOut").append("<tr><td class=\"site\">" + getSite + 
-            "</td><td class=\"count\">" + recievedData.length + 
-            " files<td><a class=\"btn " + (recievedData.length == 0 && "disabled") +  " btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
+    function addSitesToTable(keys){
+        keys = keys.sort( case_insensitive_comp );
 
-        checkedOutContent[getSite] = recievedData;
+        for (i = 0; i < keys.length; i++) {
+
+            $("table#checkedOut").append("<tr class=\"site " + keys[i].toLowerCase() + "\"><td class=\"site\">" + keys[i] + 
+                "</td><td class=\"count\"><td><a class=\"btn btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
+        }
+    }
+
+    // reference: http://stackoverflow.com/questions/5285995/how-do-you-sort-letters-in-javascript-with-capital-and-lowercase-letters-combin
+    function case_insensitive_comp(strA, strB) {
+        return strA.toLowerCase().localeCompare(strB.toLowerCase());
     }
 
     function checkInContent(contentArray){
