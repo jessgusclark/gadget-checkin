@@ -66,6 +66,9 @@ $(document).ready(function () {
                 //getCheckedOutContentInSiteSuccess(recievedData, getSite)
                 checkedOutContent[getSite] = recievedData;
                 $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + " files");
+                if (recievedData.length === 0){
+                    $(".site." + getSite.toLowerCase() + " .btn").addClass("disabled");
+                }
             }            
         });
     }
