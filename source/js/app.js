@@ -67,6 +67,7 @@ $(document).ready(function () {
                 checkedOutContent[getSite] = recievedData;
                 $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + " files");
                 if (recievedData.length === 0){
+                    $(".site." + getSite.toLowerCase()).addClass("zero-items hidden");
                     $(".site." + getSite.toLowerCase() + " .btn").addClass("disabled");
                 }
             }            
@@ -124,15 +125,20 @@ $(document).ready(function () {
         checkInContent(checkedOutContent[clickedSite]);
         $(clickedRow).find(".count").html("0 files");
         $(clickedRow).find(".btn").addClass("disabled");
+        $(clickedRow).addClass("zero-items hidden");
         
     });
 
     $("#refresh").click(function(){
-        console.log("refreshing");
         $("table#checkedOut tbody").html(" ");
         checkedOutContent = [];
         getListOfSites()
     });
+
+    $("#toggle").click(function(){
+        $(".zero-items").toggleClass("hidden");
+        $("#toggle").toggleClass("btn-success");
+    })
 
 });
 
@@ -149,7 +155,6 @@ $(gadget).on({
         // If the user changes the gadget's configuration through the configuration modal,
         // the gadget will hear about it and get the new config in the data argument here.
         console.log('New config:', config);
-        $('#main').css({ 'font-size': config.font_size });
     },
     'notification': function (evt, notification) {
         // If the gadget's config.xml contains a "notification" entry, any notifications
