@@ -5466,3 +5466,9 @@ table#checkedOut thead th {
 table#checkedOut tr td {
   padding: 2px 5px;
   border-bottom: 1px solid #ebebeb; }
+
+.sidebar .hide-for-sidebar {
+  display: none; }
+
+.dashboard .hide-for-dashboard {
+  display: none; }

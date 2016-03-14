@@ -10456,6 +10456,9 @@ $(document).ready(function () {
         // do stuff...
         getListOfSites();
 
+        // add class:
+        $("#main").addClass( getParameterByName("place", $(document).parent().context.URL) );
+
     });
 
 
@@ -10494,7 +10497,7 @@ $(document).ready(function () {
             success: function(recievedData){
                 //getCheckedOutContentInSiteSuccess(recievedData, getSite)
                 checkedOutContent[getSite] = recievedData;
-                $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + " files");
+                $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + "<span class=\"hide-for-sidebar\"> files</span>");
                 if (recievedData.length === 0){
                     $(".site." + getSite.toLowerCase()).addClass("zero-items hidden");
                     $(".site." + getSite.toLowerCase() + " .btn").addClass("disabled");
@@ -10543,6 +10546,17 @@ $(document).ready(function () {
         });
     }
 
+    // Source : http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        url = url.toLowerCase(); // This is just to avoid case sensitiveness  
+        name = name.replace(/[\[\]]/g, "\\$&").toLowerCase();// This is just to avoid case sensitiveness for query parameter name
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
     // EVENT HANDLERS:
 
@@ -10552,7 +10566,7 @@ $(document).ready(function () {
 
         // reset view:
         checkInContent(checkedOutContent[clickedSite]);
-        $(clickedRow).find(".count").html("0 files");
+        $(clickedRow).find(".count").html("0 <span class=\"hide-for-sidebar\">files</span>");
         $(clickedRow).find(".btn").addClass("disabled");
         $(clickedRow).addClass("zero-items hidden");
         
