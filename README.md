@@ -24,7 +24,7 @@ Upload the /build folder to your production server and install via [OmniUpdate's
 
 ### Install via GitHub pages
 
-Uisng [OmniUpdate's Instructions](http://support.omniupdate.com/oucampus10/setup/gadgets/new-gadget.html), when asked for the URL please use: http://jessgusclark.github.io/gadget-checkin/build/
+Uisng [OmniUpdate's Instructions](http://support.omniupdate.com/oucampus10/setup/gadgets/new-gadget.html), when asked for the URL please use: https://jessgusclark.github.io/gadget-checkin/build/
 
 ## Contributing
 
