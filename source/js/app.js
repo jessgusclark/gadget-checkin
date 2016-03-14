@@ -68,7 +68,7 @@ $(document).ready(function () {
             success: function(recievedData){
                 //getCheckedOutContentInSiteSuccess(recievedData, getSite)
                 checkedOutContent[getSite] = recievedData;
-                $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + " files");
+                $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + "<span class=\"hide-for-sidebar\"> files</span>");
                 if (recievedData.length === 0){
                     $(".site." + getSite.toLowerCase()).addClass("zero-items hidden");
                     $(".site." + getSite.toLowerCase() + " .btn").addClass("disabled");
@@ -137,7 +137,7 @@ $(document).ready(function () {
 
         // reset view:
         checkInContent(checkedOutContent[clickedSite]);
-        $(clickedRow).find(".count").html("0 files");
+        $(clickedRow).find(".count").html("0 <span class=\"hide-for-sidebar\">files</span>");
         $(clickedRow).find(".btn").addClass("disabled");
         $(clickedRow).addClass("zero-items hidden");
         
