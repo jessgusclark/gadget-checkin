@@ -141,6 +141,14 @@ $(document).ready(function () {
         $(".zero-items").toggleClass("hidden");
         $("#toggle").toggleClass("btn-success");
     })
+    
+    $("#checkinALL").click(function(){
+        var content;
+	for (content in checkedOutContent){
+	  checkInContent(checkedOutContent[content]);
+	}
+	getListOfSites()
+    });
 
 });
 
