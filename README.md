@@ -9,9 +9,11 @@ gives the user the option to check them all back in.
 
 ### Clone the repo and host locally
 
-Make sure [Bower](bower.io) and [Gulp](http://gulpjs.com/) are installed on your machine.
+Make sure [npm](https://www.npmjs.com/), [Bower](http://bower.io/), and [Gulp](http://gulpjs.com/) are installed on your machine.
 
 ```
+
+npm install
 
 bower install
 
