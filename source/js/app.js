@@ -56,6 +56,8 @@ $(document).ready(function () {
         }
 
         addSitesToTable(keys);
+	// remove success class since this is default from getCheckedOutContentInSite() success fn
+	$("#toggle").removeClass("btn-success");
     }
 
     // http://a.cms.omniupdate.com/files/checkedout?site=www
@@ -134,7 +136,7 @@ $(document).ready(function () {
     $("#refresh").click(function(){
         $("table#checkedOut tbody").html(" ");
         checkedOutContent = [];
-        getListOfSites()
+        getListOfSites();
     });
 
     $("#toggle").click(function(){
@@ -147,7 +149,7 @@ $(document).ready(function () {
 	for (content in checkedOutContent){
 	  checkInContent(checkedOutContent[content]);
 	}
-	getListOfSites()
+	getListOfSites();
     });
 
 });
