@@ -119,6 +119,11 @@ $(document).ready(function () {
         });
     }
 
+    function ClearList(){
+        $("table#checkedOut tr.site").remove();
+        checkedOutContent = [];
+    }
+
     // EVENT HANDLERS:
 
     $(document).on("click", ".check-in", function(){
@@ -134,8 +139,7 @@ $(document).ready(function () {
     });
 
     $("#refresh").click(function(){
-        $("table#checkedOut tbody").html(" ");
-        checkedOutContent = [];
+        ClearList();
         getListOfSites();
     });
 
