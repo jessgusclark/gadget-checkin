@@ -150,10 +150,11 @@ $(document).ready(function () {
     
     $("#checkinALL").click(function(){
         var content;
-	for (content in checkedOutContent){
-	  checkInContent(checkedOutContent[content]);
-	}
-	getListOfSites();
+    	for (content in checkedOutContent){
+    	  checkInContent(checkedOutContent[content]);
+    	}
+        ClearList();
+    	getListOfSites();
     });
 
 });
