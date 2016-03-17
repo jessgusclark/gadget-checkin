@@ -10485,6 +10485,8 @@ $(document).ready(function () {
         }
 
         addSitesToTable(keys);
+	// remove success class since this is default from getCheckedOutContentInSite() success fn
+	$("#toggle").removeClass("btn-success");
     }
 
     // http://a.cms.omniupdate.com/files/checkedout?site=www
@@ -10546,6 +10548,11 @@ $(document).ready(function () {
         });
     }
 
+    function ClearList(){
+        $("table#checkedOut tr.site").remove();
+        checkedOutContent = [];
+    }
+
     // EVENT HANDLERS:
 
     $(document).on("click", ".check-in", function(){
@@ -10561,15 +10568,23 @@ $(document).ready(function () {
     });
 
     $("#refresh").click(function(){
-        $("table#checkedOut tbody").html(" ");
-        checkedOutContent = [];
-        getListOfSites()
+        ClearList();
+        getListOfSites();
     });
 
     $("#toggle").click(function(){
         $(".zero-items").toggleClass("hidden");
         $("#toggle").toggleClass("btn-success");
     })
+    
+    $("#checkinALL").click(function(){
+        var content;
+    	for (content in checkedOutContent){
+    	  checkInContent(checkedOutContent[content]);
+    	}
+        ClearList();
+    	getListOfSites();
+    });
 
 });
 
