@@ -81,10 +81,11 @@ $(document).ready(function () {
 
     function addSitesToTable(keys){
         keys = keys.sort( case_insensitive_comp );
+        url = gadget.get('apihost') + '/10/#oucampus/' + gadget.get('site') + "/";
 
         for (i = 0; i < keys.length; i++) {
 
-            $("table#checkedOut").append("<tr class=\"site " + keys[i].toLowerCase() + "\"><td class=\"site\">" + keys[i] + 
+            $("table#checkedOut").append("<tr class=\"site " + keys[i].toLowerCase() + "\"><td class=\"site\"><a href=\"" + url + keys[i] + "\" target=\"_parent\">" + keys[i] +
                 "</td><td class=\"count\"><td><a class=\"btn btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
         }
     }
