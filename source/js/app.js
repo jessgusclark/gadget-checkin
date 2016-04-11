@@ -86,7 +86,7 @@ $(document).ready(function () {
         for (i = 0; i < keys.length; i++) {
 
             $("table#checkedOut").append("<tr class=\"site " + keys[i].toLowerCase() + "\"><td class=\"site\"><a href=\"" + url + keys[i] + "\" target=\"_parent\">" + keys[i] +
-                "</td><td class=\"count\"><td><a class=\"btn btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
+                "</a></td><td class=\"count\"><td><a class=\"btn btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
         }
     }
 
@@ -129,7 +129,7 @@ $(document).ready(function () {
 
     $(document).on("click", ".check-in", function(){
         var clickedRow = $(this).parent().parent();
-        var clickedSite = $(clickedRow).find(".site").html();
+        var clickedSite = $(clickedRow).find(".site a").html();
 
         // reset view:
         checkInContent(checkedOutContent[clickedSite]);
