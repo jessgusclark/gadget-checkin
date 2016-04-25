@@ -233,6 +233,7 @@ $(document).ready(function () {
     $("#refresh").click(function(){
         ClearList();
         getListOfSites();
+        checkCurrentView();
     });
 
     $("#refresh-directory").click(function(){
