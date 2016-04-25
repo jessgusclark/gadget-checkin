@@ -13,6 +13,7 @@ $(document).ready(function () {
     */
     var apihost;
     var token;
+    var isAdmin = false;
 
     var checkedOutContent = [];
 
@@ -25,8 +26,8 @@ $(document).ready(function () {
 
        
         // do stuff...
+        checkUserAccess();
         getListOfSites();
-
         checkCurrentView();
 
         // add class:
@@ -105,7 +106,6 @@ $(document).ready(function () {
             url: apihost + "/files/list?site=" + getSite + "&path=" + getDirectory,
             data: {"authorization_token" : token },
             success: function(recievedData){
-                
                 addDirectoryContentToTable(recievedData.entries, getSite);
             }            
         });
@@ -128,8 +128,6 @@ $(document).ready(function () {
         checkedOutContent["everyone-content"] = [];
         checkedOutContent["user-content"] = [];
 
-        userName = gadget.get('user');
-
         for (i = 0; i < entries.length; i++) {
             
             if (entries[i].locked_by != null){
@@ -140,9 +138,11 @@ $(document).ready(function () {
                     path: entries[i].staging_path
                 }
 
-                checkedOutContent["everyone-content"].push(tempObject);
+                if (isAdmin){
+                    checkedOutContent["everyone-content"].push(tempObject);
+                }
 
-                if (entries[i].locked_by === userName){
+                if (entries[i].locked_by === gadget.get('user') ){
                     checkedOutContent["user-content"].push(tempObject);
                 }
 
@@ -200,6 +200,30 @@ $(document).ready(function () {
         $("table#checkedOut tr.site").remove();
         checkedOutContent = [];
     }
+
+
+    /// If user is admin, change isAdmin to true.
+    function checkUserAccess(){
+        $.ajax({
+            dataType: "json",
+            url: apihost + "/users/view",
+            type: "GET",
+            data: { 
+                "authorization_token" : token,
+                "account" : "UNCO",
+                "user" : gadget.get('user')
+            },
+            success: function(data){    
+                if (data.privilege > 8){
+                    isAdmin = true;
+                }
+            }
+            
+        });
+
+    }
+
+
 
     // EVENT HANDLERS:
 
