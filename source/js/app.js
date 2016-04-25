@@ -135,15 +135,19 @@ $(document).ready(function () {
         $(".everyone-content").find("td.count").text(checkedOutContent["everyone-content"].length);
         $(".user-content").find("td.count").text(checkedOutContent["user-content"].length);
 
-        if (checkedOutContent["everyone-content"].length === 0){
-            $(".user").hide();
-            $(".everyone").hide();
-        }
-        if (checkedOutContent["user-content"].length === 0){
-            $(".user").hide();                    
-        }
+        checkLength(".everyone-content", checkedOutContent["everyone-content"].length);
+        checkLength(".user-content", checkedOutContent["user-content"].length);
+
     }
 
+    //helper function for visibility:
+    function checkLength(item, length){
+        if (length === 0){
+            $(item).hide();
+        }else{
+            $(item).show();
+        }
+    }
 
     // reference: http://stackoverflow.com/questions/5285995/how-do-you-sort-letters-in-javascript-with-capital-and-lowercase-letters-combin
     function case_insensitive_comp(strA, strB) {
