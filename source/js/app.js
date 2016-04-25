@@ -258,10 +258,6 @@ $(document).ready(function () {
         checkCurrentView();
     });
 
-    $("#refresh-directory").click(function(){
-
-    });
-
     $("#toggle").click(function(){
         $(".zero-items").toggleClass("hidden");
         $("#toggle").toggleClass("btn-success");
@@ -274,6 +270,7 @@ $(document).ready(function () {
     	}
         ClearList();
     	getListOfSites();
+        checkCurrentView();
     });
 
 
