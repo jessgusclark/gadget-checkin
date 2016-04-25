@@ -27,7 +27,7 @@ $(document).ready(function () {
         // do stuff...
         getListOfSites();
 
-        getCheckedOutContentInDirectory( gadget.get('site') , "/jesse");
+        //checkCurrentView();
 
         // add class:
         $("#main").addClass( gadget.get('place') );
@@ -61,6 +61,16 @@ $(document).ready(function () {
 	// remove success class since this is default from getCheckedOutContentInSite() success fn
 	$("#toggle").removeClass("btn-success");
     }
+
+
+    function checkCurrentView(){
+
+        gadget.oucGetCurrentLocation().done(function(data){
+            console.log("Current Location:", data );
+        });
+
+    }
+
 
     // http://a.cms.omniupdate.com/files/checkedout?site=www
     function getCheckedOutContentInSite(getSite){
@@ -216,6 +226,10 @@ $(document).ready(function () {
     $("#refresh").click(function(){
         ClearList();
         getListOfSites();
+    });
+
+    $("#refresh-directory").click(function(){
+
     });
 
     $("#toggle").click(function(){
