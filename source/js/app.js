@@ -27,6 +27,8 @@ $(document).ready(function () {
         // do stuff...
         getListOfSites();
 
+        getCheckedOutContentInDirectory("www", "/jesse");
+
         // add class:
         $("#main").addClass( gadget.get('place') );
 
@@ -79,6 +81,20 @@ $(document).ready(function () {
         });
     }
 
+    function getCheckedOutContentInDirectory(getSite, getDirectory){
+
+        $.ajax({
+            dataType: "json",
+            url: apihost + "/files/list?site=" + getSite + "&path=" + getDirectory,
+            data: {"authorization_token" : token },
+            success: function(recievedData){
+                
+                addDirectoryContentToTable(recievedData.entries);
+            }            
+        });
+
+    }
+
     function addSitesToTable(keys){
         keys = keys.sort( case_insensitive_comp );
         url = gadget.get('apihost') + '/10/#oucampus/' + gadget.get('site') + "/";
@@ -89,6 +105,36 @@ $(document).ready(function () {
                 "</a></td><td class=\"count\"><td><a class=\"btn btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
         }
     }
+
+    function addDirectoryContentToTable(entries){
+        var everyoneCount = 0;
+        var userCount = 0;
+        userName = gadget.get('user');
+
+        for (i = 0; i < entries.length; i++) {
+            
+            if (entries[i].locked_by != null){
+                
+                everyoneCount++;
+
+                if (entries[i].locked_by === userName){
+                    userCount++;
+                }
+            }
+        }
+
+        $(".folder-count-everyone").text(everyoneCount);
+            $(".folder-count-user").text(userCount);
+
+        if (everyoneCount === 0){
+            $(".user").hide();
+            $(".everyone").hide();
+        }
+        if (userCount != 0){
+            $(".user").hide();                    
+        }
+    }
+
 
     // reference: http://stackoverflow.com/questions/5285995/how-do-you-sort-letters-in-javascript-with-capital-and-lowercase-letters-combin
     function case_insensitive_comp(strA, strB) {
