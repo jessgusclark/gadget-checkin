@@ -210,7 +210,7 @@ $(document).ready(function () {
             type: "GET",
             data: { 
                 "authorization_token" : token,
-                "account" : "UNCO",
+                "account" : gadget.get('account'),
                 "user" : gadget.get('user')
             },
             success: function(data){    
