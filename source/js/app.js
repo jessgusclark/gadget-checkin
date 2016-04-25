@@ -225,9 +225,7 @@ $(document).ready(function () {
         if (clickedRow.hasClass("user-content")){
             checkInContent(checkedOutContent["user-content"]);
         }
-
-        $(clickedRow).find("td.count").text(0);
-
+        checkCurrentView();
     });
 
     $("#refresh").click(function(){
