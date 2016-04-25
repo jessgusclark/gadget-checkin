@@ -27,7 +27,7 @@ $(document).ready(function () {
         // do stuff...
         getListOfSites();
 
-        //checkCurrentView();
+        checkCurrentView();
 
         // add class:
         $("#main").addClass( gadget.get('place') );
@@ -63,10 +63,17 @@ $(document).ready(function () {
     }
 
 
+    // this is clunky and should be refactored!
     function checkCurrentView(){
 
         gadget.oucGetCurrentLocation().done(function(data){
-            console.log("Current Location:", data );
+            var hash = data.hash;
+
+            if (hash.indexOf( 'browse/staging' ) != -1){
+                var path = hash.substring( hash.indexOf( 'browse/staging' )+14 );                
+                getCheckedOutContentInDirectory(gadget.get('site'), path);
+            }
+            
         });
 
     }
