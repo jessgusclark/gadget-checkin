@@ -13,6 +13,7 @@ $(document).ready(function () {
     */
     var apihost;
     var token;
+    var isAdmin = false;
 
     var checkedOutContent = [];
 
@@ -25,7 +26,9 @@ $(document).ready(function () {
 
        
         // do stuff...
+        checkUserAccess();
         getListOfSites();
+        checkCurrentView();
 
         // add class:
         $("#main").addClass( gadget.get('place') );
@@ -60,6 +63,23 @@ $(document).ready(function () {
 	$("#toggle").removeClass("btn-success");
     }
 
+
+    // this is clunky and should be refactored!
+    function checkCurrentView(){
+
+        gadget.oucGetCurrentLocation().done(function(data){
+            var hash = data.hash;
+
+            if (hash.indexOf( 'browse/staging' ) != -1){
+                var path = hash.substring( hash.indexOf( 'browse/staging' )+14 );                
+                getCheckedOutContentInDirectory(gadget.get('site'), path);
+            }
+            
+        });
+
+    }
+
+
     // http://a.cms.omniupdate.com/files/checkedout?site=www
     function getCheckedOutContentInSite(getSite){
 
@@ -79,6 +99,19 @@ $(document).ready(function () {
         });
     }
 
+    function getCheckedOutContentInDirectory(getSite, getDirectory){
+
+        $.ajax({
+            dataType: "json",
+            url: apihost + "/files/list?site=" + getSite + "&path=" + getDirectory,
+            data: {"authorization_token" : token },
+            success: function(recievedData){
+                addDirectoryContentToTable(recievedData.entries, getSite);
+            }            
+        });
+
+    }
+
     function addSitesToTable(keys){
         keys = keys.sort( case_insensitive_comp );
         url = gadget.get('apihost') + '/10/#oucampus/' + gadget.get('site') + "/";
@@ -87,6 +120,49 @@ $(document).ready(function () {
 
             $("table#checkedOut").append("<tr class=\"site " + keys[i].toLowerCase() + "\"><td class=\"site\"><a href=\"" + url + keys[i] + "\" target=\"_parent\">" + keys[i] +
                 "</a></td><td class=\"count\"><td><a class=\"btn btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
+        }
+    }
+
+    function addDirectoryContentToTable(entries, getSite){
+
+        checkedOutContent["everyone-content"] = [];
+        checkedOutContent["user-content"] = [];
+
+        for (i = 0; i < entries.length; i++) {
+            
+            if (entries[i].locked_by != null){
+                
+                // format equal to the site:
+                var tempObject = {
+                    site: getSite,
+                    path: entries[i].staging_path
+                }
+
+                if (isAdmin){
+                    checkedOutContent["everyone-content"].push(tempObject);
+                }
+
+                if (entries[i].locked_by === gadget.get('user') ){
+                    checkedOutContent["user-content"].push(tempObject);
+                }
+
+            }
+        }
+
+        $(".everyone-content").find("td.count").text(checkedOutContent["everyone-content"].length);
+        $(".user-content").find("td.count").text(checkedOutContent["user-content"].length);
+
+        checkLength(".everyone-content", checkedOutContent["everyone-content"].length);
+        checkLength(".user-content", checkedOutContent["user-content"].length);
+
+    }
+
+    //helper function for visibility:
+    function checkLength(item, length){
+        if (length === 0){
+            $(item).hide();
+        }else{
+            $(item).show();
         }
     }
 
@@ -125,6 +201,30 @@ $(document).ready(function () {
         checkedOutContent = [];
     }
 
+
+    /// If user is admin, change isAdmin to true.
+    function checkUserAccess(){
+        $.ajax({
+            dataType: "json",
+            url: apihost + "/users/view",
+            type: "GET",
+            data: { 
+                "authorization_token" : token,
+                "account" : "UNCO",
+                "user" : gadget.get('user')
+            },
+            success: function(data){    
+                if (data.privilege > 8){
+                    isAdmin = true;
+                }
+            }
+            
+        });
+
+    }
+
+
+
     // EVENT HANDLERS:
 
     $(document).on("click", ".check-in", function(){
@@ -139,9 +239,27 @@ $(document).ready(function () {
         
     });
 
+    $(document).on("click", ".check-in-directory", function(){
+        var clickedRow = $(this).parent().parent();
+        
+        if (clickedRow.hasClass("everyone-content")){
+            checkInContent(checkedOutContent["everyone-content"]);
+        }
+        
+        if (clickedRow.hasClass("user-content")){
+            checkInContent(checkedOutContent["user-content"]);
+        }
+        checkCurrentView();
+    });
+
     $("#refresh").click(function(){
         ClearList();
         getListOfSites();
+        checkCurrentView();
+    });
+
+    $("#refresh-directory").click(function(){
+
     });
 
     $("#toggle").click(function(){
@@ -156,6 +274,16 @@ $(document).ready(function () {
     	}
         ClearList();
     	getListOfSites();
+    });
+
+
+    //view_changed:
+    $(gadget).on({
+        'view_changed' :function(evt, notification){
+            if (notification.directory != null){
+                getCheckedOutContentInDirectory(gadget.get('site'), notification.directory);
+            }
+        }
     });
 
 });
