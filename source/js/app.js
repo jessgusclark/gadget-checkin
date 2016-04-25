@@ -151,7 +151,7 @@ $(document).ready(function () {
     }
 
     function checkInContent(contentArray){
-console.log(contentArray);
+
         for (i = 0; i < contentArray.length; i++) {
             checkInSingleContent(contentArray[i]);
         }
@@ -226,6 +226,16 @@ console.log(contentArray);
     	}
         ClearList();
     	getListOfSites();
+    });
+
+
+    //view_changed:
+    $(gadget).on({
+        'view_changed' :function(evt, notification){
+            if (notification.directory != null){
+                getCheckedOutContentInDirectory(gadget.get('site'), notification.directory);
+            }
+        }
     });
 
 });
