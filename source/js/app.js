@@ -27,7 +27,7 @@ $(document).ready(function () {
         // do stuff...
         getListOfSites();
 
-        getCheckedOutContentInDirectory("www", "/jesse");
+        getCheckedOutContentInDirectory( gadget.get('site') , "/jesse");
 
         // add class:
         $("#main").addClass( gadget.get('place') );
@@ -123,19 +123,17 @@ $(document).ready(function () {
                     path: entries[i].staging_path
                 }
 
-                console.log(tempObject);
-
                 checkedOutContent["everyone-content"].push(tempObject);
 
                 if (entries[i].locked_by === userName){
                     checkedOutContent["user-content"].push(tempObject);
                 }
-                
+
             }
         }
 
-        $(".folder-count-everyone").text(checkedOutContent["everyone-content"].length);
-            $(".folder-count-user").text(checkedOutContent["user-content"].length);
+        $(".everyone-content").find("td.count").text(checkedOutContent["everyone-content"].length);
+        $(".user-content").find("td.count").text(checkedOutContent["user-content"].length);
 
         if (checkedOutContent["everyone-content"].length === 0){
             $(".user").hide();
@@ -153,7 +151,7 @@ $(document).ready(function () {
     }
 
     function checkInContent(contentArray){
-
+console.log(contentArray);
         for (i = 0; i < contentArray.length; i++) {
             checkInSingleContent(contentArray[i]);
         }
@@ -194,6 +192,21 @@ $(document).ready(function () {
         $(clickedRow).find(".btn").addClass("disabled");
         $(clickedRow).addClass("zero-items hidden");
         
+    });
+
+    $(document).on("click", ".check-in-directory", function(){
+        var clickedRow = $(this).parent().parent();
+        
+        if (clickedRow.hasClass("everyone-content")){
+            checkInContent(checkedOutContent["everyone-content"]);
+        }
+        
+        if (clickedRow.hasClass("user-content")){
+            checkInContent(checkedOutContent["user-content"]);
+        }
+
+        $(clickedRow).find("td.count").text(0);
+
     });
 
     $("#refresh").click(function(){
