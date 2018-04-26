@@ -27,46 +27,52 @@ $(document).ready(function () {
         console.log("Gadget Ready!!");
 
         // get list of sites:
-        getCheckedOutContent();
+        getSitesInAccount();
 
     });
 
-    function getCheckedOutContent(){
+    function getSitesInAccount(){
         $.when( sites.getSites() ).done(function(data) {
             
+            // sort data by site name:
+            var sorted = sites.sortData(data);
+            console.log("sorted", sorted);
             // format list of sites on the HTML:
-            $.each(data, function(key, value) {
-
+            $.each(sorted, function(key, value) {
                 siteList.push(value.site);
 
-                // get list of checkout files for each site:
-                $.when( files.getFiles(value.site) ).done(function(data) {
-
-                    var _active = files.getActiveFiles(data);
-                    var _html = $(sites.createTableRow( value, _active.length ) );
-                    var $checkInButton = $('<a/>').attr({ class: 'btn btn-outline-info btn-sm float-right'}).html('Check In');
-                    
-                    //add click event:
-                    $checkInButton.on('click', function(){
-                        //files.checkInFiles(_active);
-                        $(_html).find(".count").html("0 files");
-
-                        // add visibility classes:
-                        if ($(".toggleSites").hasClass("active")){
-                            $(_html).addClass("visible");
-                        }else{
-                            $(_html).addClass("invisible");
-                        }
-                    });
-
-                    $(_html).find('.button').append( $checkInButton );
-                    $("#checkedOut tbody").append( _html );
-
-                });
+                loopThroughSite(value);
             });
+        });
+    }
+
+    function loopThroughSite(value){
+        // get list of checkout files for each site:
+        $.when( files.getFiles(value.site) ).done(function(data) {
+
+            var _active = files.getActiveFiles(data);
+            var _html = $(sites.createTableRow( value, _active.length ) );
+            var $checkInButton = $('<a/>').attr({ class: 'btn btn-outline-info btn-sm float-right'}).html('Check In');
+            
+            //add click event:
+            $checkInButton.on('click', function(){
+                //files.checkInFiles(_active);
+                $(_html).find(".count").html("0 files");
+
+                // add visibility classes:
+                if ($(".toggleSites").hasClass("active")){
+                    $(_html).addClass("visible");
+                }else{
+                    $(_html).addClass("invisible");
+                }
+            });
+
+            $(_html).find('.button').append( $checkInButton );
+            $("#checkedOut tbody").append( _html );
 
         });
     }
+
 
     //create event listeners:
     $(".btn.checkInAll").on('click', function(){
@@ -78,7 +84,7 @@ $(document).ready(function () {
     $(".btn.refresh").on('click', function(){
         $("#checkedOut tbody").html("");
         $(".toggleSites").removeClass("active");
-        getCheckedOutContent();
+        getSitesInAccount();
     })
 
     $(".btn.toggleSites").on('click', function(){

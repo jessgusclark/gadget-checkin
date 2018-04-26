@@ -25,6 +25,29 @@
 			return deferred.promise();
 	  	},
 
+	  	/*
+	  	 * Sort json array.
+		 * Docs: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+	  	 */
+	  	sortData: function(data){
+
+	  		var sorted = data.sort(function(a, b) {
+			    //return a.site - b.site;
+			    var siteA = a.site.toUpperCase(); // ignore upper and lowercase
+				var siteB = b.site.toUpperCase(); // ignore upper and lowercase
+				if (siteA < siteB) {
+					return -1;
+				}
+				if (siteA > siteB) {
+				    return 1;
+				}
+				// names must be equal
+				return 0;
+			});
+
+	  		return sorted;
+	  	},
+
 	  	createTableRow : function(site, count){
 	  		var _invisible = (count == 0) ? ' invisible' : '';
 
@@ -34,6 +57,12 @@
 	}
 
 
+	/*function sortObjectKeys(obj){
+	    return Object.keys(obj).sort().reduce((acc,key)=>{
+	        acc[key]=obj[key];
+	        return acc;
+	    },{});
+	}*/
 
 	exports.sites = sites;
 

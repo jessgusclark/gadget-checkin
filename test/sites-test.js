@@ -35,6 +35,16 @@ describe('test sites', function() {
 
 	});
 
+	it('should sort the sites based on the site name', function(){
+
+		var sampleData = [{"site":"mcb"},{"site":"www"},{"site":"arts"}]
+		var sortedData = app.sites.sortData(sampleData);
+
+		assert.equal( "arts", sortedData[0].site );
+		assert.equal( "mcb", sortedData[1].site );
+
+	});
+
 	it('should return a table row with formatted content', function(){
 		// expected site www, account TEST
 		var expected = '<tr class="site www"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/TEST/www/" target="_parent">www</a></td><td width="20%" class="count">2 files</td><td width="20%" class="button"></td></tr>';
