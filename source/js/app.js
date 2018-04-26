@@ -10,6 +10,13 @@ $(document).ready(function () {
         // get list of sites:
         getSitesInAccount();
 
+    }).fail(function(err){
+        // gadget.ready failed, display a message:
+        if (err.responseText.code = "SESSION_NOT_FOUND"){
+            $("#checkedOut tbody").append('<tr colspan="3"><td><strong>Error (SESSION_NOT_FOUND)</strong><br/> This can happen when your authorization token has expired. Please try refreshing the entire page.</td></tr>');
+        }
+        
+        console.log("gadget.ready fail!", err);
     });
 
     // get the sites that are located in the account
@@ -22,13 +29,13 @@ $(document).ready(function () {
             // format list of sites on the HTML:
             $.each(sorted, function(key, value) {
                 siteList.push(value.site);
-                getSiteInformation(value);
+                getFilesInSite(value);
             });
         });
     }
 
     // find the files associated with the site
-    function getSiteInformation(value){
+    function getFilesInSite(value){
 
         // write shell of row in alphebetical order:
         var _html = $("#checkedOut tbody").append( $(sites.createTableRow( value ) ) );
