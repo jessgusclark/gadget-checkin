@@ -26,8 +26,9 @@
 	  	},
 
 	  	createTableRow : function(site, count){
+	  		var _invisible = (count == 0) ? ' invisible' : '';
 
-	  		return '<tr class="site ' + site.site + '"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/' + gadget.account + '/' + site.site + '/" target="_parent">' + site.site + '</a></td><td width="20%" class="count">' + count + ' files</td><td width="20%"><a class="btn btn-outline-info float-right">Check In</a></td></tr>';
+	  		return '<tr class="site ' + site.site + _invisible + '"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/' + gadget.account + '/' + site.site + '/" target="_parent">' + site.site + '</a></td><td width="20%" class="count">' + count + ' files</td><td width="20%" class="button"></td></tr>';
 	  	}
 
 	}

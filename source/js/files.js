@@ -4,12 +4,12 @@
 	//public functions:
 	var files = {
 
-		getFiles : function(site){
+		getFiles : function(_site){
 			var deferred = $.Deferred();
 
 	  		var data = {
 	  			"authorization_token" : gadget.token,
-	  			"site" : site
+	  			"site" : _site
 	  		}
 	  		
 	  		$.ajax({
@@ -25,10 +25,10 @@
 
 			return deferred.promise();
 	  	},
-	  	getActiveFiles : function(pages){
+	  	getActiveFiles : function(_pages){
 	  		var activeFiles = [];
 
-	  		$.each(pages, function(key, value) {
+	  		$.each(_pages, function(key, value) {
 
 	  			if (!value.is_scheduled_to_publish && 
 	  				!value.is_scheduled_to_expire && 
@@ -40,9 +40,46 @@
 	  		});
 
 	  		return activeFiles;
-	  	}
+	  	},
 
+	  	checkInFiles : function(_files){
+	  		console.log( "checking in files!!", _files );
+
+	  		$.each(_files, function(key, value) {
+	  			console.log("file", value.site, value.path);
+	  			checkInIndividualFile(value);
+	  		});
+
+	  	}
 	}
+
+
+	function checkInIndividualFile(_file) {
+
+  		var deferred = $.Deferred();
+
+  		var data = {
+  			"authorization_token" : gadget.token,
+  			"site" : _file.site,
+  			"path" : _file.path
+  		}
+  		
+  		$.ajax({
+			dataType: "json",
+			url: gadget.apihost + "/files/checkin",
+			data: data,
+			type: "POST"
+		}).done(function(data){
+			console.log("file checked in:", _file.path);
+			deferred.resolve(true);
+		}).fail(function(err){
+			console.log("/files/checkedout error", err);
+			deferred.resolve(false);
+		});
+
+		return deferred.promise();
+
+  	}
 
 	exports.files = files;
 

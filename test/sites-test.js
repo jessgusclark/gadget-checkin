@@ -37,11 +37,21 @@ describe('test sites', function() {
 
 	it('should return a table row with formatted content', function(){
 		// expected site www, account TEST
-		var expected = '<tr class="site www"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/TEST/www/" target="_parent">www</a></td><td width="20%" class="count">2 files</td><td width="20%"><a class="btn btn-outline-info float-right">Check In</a></td></tr>';
+		var expected = '<tr class="site www"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/TEST/www/" target="_parent">www</a></td><td width="20%" class="count">2 files</td><td width="20%" class="button"></td></tr>';
 
 		var site = {"site":"www"}
 		
 		assert.equal(expected, app.sites.createTableRow(site, 2));
+
+	});
+
+	it('should return an indivisible table row with formatted content', function(){
+		// expected site www, account TEST
+		var expected = '<tr class="site www invisible"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/TEST/www/" target="_parent">www</a></td><td width="20%" class="count">0 files</td><td width="20%" class="button"></td></tr>';
+
+		var site = {"site":"www"}
+
+		assert.equal(expected, app.sites.createTableRow(site, 0) );
 
 	});
 

@@ -33,73 +33,29 @@ $(document).ready(function () {
 
                 // get list of checkout files for each site:
                 $.when( files.getFiles(value.site) ).done(function(data) {
-                    console.log(value.site, data);
 
                     var _active = files.getActiveFiles(data);
+                    var _html = $(sites.createTableRow( value, _active.length ) );
+                    var $checkInButton = $('<a/>').attr({ class: 'btn btn-outline-info float-right'}).html('Check In');
+                    
+                    //add click event:
+                    $checkInButton.on('click', function(){
+                        files.checkInFiles(_active);
+                    });
 
-                    $("#checkedOut tbody").append(
-                        sites.createTableRow( value, _active.length )
-                    );
+                    $(_html).find('.button').append( $checkInButton );
+                    $("#checkedOut tbody").append( _html );
+
                 });
 
             });
 
         });
 
-        // do stuff...
-        //checkUserAccess();
-        //getListOfSites();
-        //checkCurrentView();
-
-        // add class:
-        //$("#main").addClass( gadget.get('place') );
-
     });
 
+    
 
-
-    // http://a.cms.omniupdate.com/files/checkedout?site=www
-    function getCheckedOutContentInSite(getSite){
-
-        $.ajax({
-            dataType: "json",
-            url: apihost + "/files/checkedout?site=" + getSite,
-            data: {"authorization_token" : token },
-            success: function(recievedData){
-                //getCheckedOutContentInSiteSuccess(recievedData, getSite)
-                checkedOutContent[getSite] = recievedData;
-                $(".site." + getSite.toLowerCase() + " .count" ).html(recievedData.length + "<span class=\"hide-for-sidebar\"> files</span>");
-                if (recievedData.length === 0){
-                    $(".site." + getSite.toLowerCase()).addClass("zero-items hidden");
-                    $(".site." + getSite.toLowerCase() + " .btn").addClass("disabled");
-                }
-            }            
-        });
-    }
-
-    function getCheckedOutContentInDirectory(getSite, getDirectory){
-
-        $.ajax({
-            dataType: "json",
-            url: apihost + "/files/list?site=" + getSite + "&path=" + getDirectory,
-            data: {"authorization_token" : token },
-            success: function(recievedData){
-                addDirectoryContentToTable(recievedData.entries, getSite);
-            }            
-        });
-
-    }
-
-    function addSitesToTable(keys){
-        keys = keys.sort( case_insensitive_comp );
-        url = gadget.get('apihost') + '/10/#oucampus/' + gadget.get('site') + "/";
-
-        for (i = 0; i < keys.length; i++) {
-
-            $("table#checkedOut").append("<tr class=\"site " + keys[i].toLowerCase() + "\"><td class=\"site\"><a href=\"" + url + keys[i] + "\" target=\"_parent\">" + keys[i] +
-                "</a></td><td class=\"count\"><td><a class=\"btn btn-default btn-sm check-in pull-right\">Check In</a></td></tr>" );
-        }
-    }
 
     function addDirectoryContentToTable(entries, getSite){
 
