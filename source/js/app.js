@@ -13,7 +13,6 @@ $(document).ready(function () {
     */
     var apihost;
     var token;
-    var isAdmin = false;
 
     var checkedOutContent = [];
 
@@ -24,60 +23,36 @@ $(document).ready(function () {
         apihost = gadget.get('apihost');
         token = gadget.get('token');        
 
-       
+        console.log("Gadget Ready!");
+
+        // get list of sites:
+        $.when( sites.getSites() ).done(function(data) {
+            
+            // format list of sites on the HTML:
+            $.each(data, function(key, value) {
+
+                // get list of checkout files for each site:
+                $.when( files.getFiles(value.site) ).done(function(data) {
+                    console.log(value.site, data);
+                    $("#checkedOut tbody").append(
+                        sites.createTableRow(value, data.length)
+                    );
+                });
+
+            });
+
+        });
+
         // do stuff...
-        checkUserAccess();
-        getListOfSites();
-        checkCurrentView();
+        //checkUserAccess();
+        //getListOfSites();
+        //checkCurrentView();
 
         // add class:
-        $("#main").addClass( gadget.get('place') );
+        //$("#main").addClass( gadget.get('place') );
 
     });
 
-
-    // http://a.cms.omniupdate.com/sites/list
-    function getListOfSites(){
-
-        $.ajax({
-            dataType: "json",
-            url: apihost + "/sites/list",
-            data: {"authorization_token" : token },
-            success: getListOfSitesSuccess
-        });
-
-    }
-
-    function getListOfSitesSuccess(recievedData){
-        var keys = [];
-        // Loop through recievedData and add to array:
-        for (i = 0; i < recievedData.length; i++) {
-            checkedOutContent[recievedData[i].site] = [];
-            getCheckedOutContentInSite(recievedData[i].site);
-
-            keys.push(recievedData[i].site);
-        }
-
-        addSitesToTable(keys);
-	// remove success class since this is default from getCheckedOutContentInSite() success fn
-	$("#toggle").removeClass("btn-success");
-    }
-
-
-    // this is clunky and should be refactored!
-    function checkCurrentView(){
-
-        gadget.oucGetCurrentLocation().done(function(data){
-            var hash = data.hash;
-
-            if (hash.indexOf( 'browse/staging' ) != -1){
-                var path = hash.substring( hash.indexOf( 'browse/staging' )+14 );                
-                getCheckedOutContentInDirectory(gadget.get('site'), path);
-            }
-            
-        });
-
-    }
 
 
     // http://a.cms.omniupdate.com/files/checkedout?site=www
