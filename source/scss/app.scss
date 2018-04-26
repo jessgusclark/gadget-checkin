@@ -2,7 +2,7 @@
 
 
 body {
-    margin: 10px;
+    /*margin: 10px;*/
     background-color: transparent;
 }
 
@@ -15,9 +15,20 @@ table#checkedOut thead th {
 	border-bottom:2px solid #737676;
 }
 
+table#checkedOut tbody {
+	display: inline-block;
+	width: 373px;
+	height:228px;
+	overflow-y:auto;
+}
+
 table#checkedOut tr td {
 	padding: 2px 5px;
 	border-bottom:1px solid #ebebeb;
 } 
 
 .invisible {display: none;}
+
+/* Match OU Campus styles: */
+a {color:#0077b1;}
+td {font-size: 14px}
