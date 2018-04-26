@@ -31,6 +31,11 @@ table#checkedOut tr td {
 .count0 {display: none;}
 .count0.visible {display:table-row !important;}
 
+.btn-outline-dark:not(:disabled):not(.disabled).active, .btn-outline-dark:hover {
+	background-color: #ffc107 !important;
+	border-color:#fff !important;
+}
+
 /* Match OU Campus styles: */
 a {color:#0077b1;}
 td {font-size: 14px}
