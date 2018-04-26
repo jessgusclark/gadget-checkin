@@ -15,7 +15,7 @@ $(document).ready(function () {
         if (err.responseText.code = "SESSION_NOT_FOUND"){
             $("#checkedOut tbody").append('<tr colspan="3"><td><strong>Error (SESSION_NOT_FOUND)</strong><br/> This can happen when your authorization token has expired. Please try refreshing the entire page.</td></tr>');
         }
-        
+
         console.log("gadget.ready fail!", err);
     });
 
@@ -87,7 +87,7 @@ $(document).ready(function () {
 
     $(".btn.checkInAll").on('click', function(){
         $.each(siteList, function(key, value) {
-            _button = $("." + value).not('.visible').not('.invisible').find("a.btn").click();
+            _button = $("." + value).not('.count0').find("a.btn").click();
         });
     });
 
