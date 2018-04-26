@@ -10,8 +10,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="js/gadgetlib.js"></script>
     <script src="js/gadget.min.js"></script>
-    
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
 </head>
 <body>    
@@ -21,13 +19,15 @@
                 <tr>
                     <th width="30%">Sites</th>
                     <th colspan="2">
-                        <a id="refresh" title="Refresh" class="btn btn-default btn-sm pull-right">
-                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        <div class="float-right" role="group" aria-label="Basic example">
+                            <a class="btn btn-sm btn-warning btn-lg">CheckIn All</a>
+                            <a class="btn btn-sm btn-outline-dark">
+                                <img src="images/eye.svg" alt="Eye" width="15px" />
                             </a>
-                        <a id="toggle" title="Hide/Show Sites with 0 Checked Out Items" class="btn btn-default btn-sm pull-right">
-                            <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            <a class="btn btn-sm btn-outline-dark">
+                                <img src="images/refresh.svg" alt="Refresh" width="15px" />
                             </a>
-                        <a id="checkinALL" title="checkinALL" class="btn btn-warning btn-sm pull-right">CheckIn All</a>
+                        </div>
                     </th>
                 </tr>
             </thead>

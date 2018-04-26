@@ -23,9 +23,14 @@ $(document).ready(function () {
         apihost = gadget.get('apihost');
         token = gadget.get('token');        
 
-        console.log("Gadget Ready!");
+        console.log("Gadget Ready!!");
 
         // get list of sites:
+        getCheckedOutContent();
+
+    });
+
+    function getCheckedOutContent(){
         $.when( sites.getSites() ).done(function(data) {
             
             // format list of sites on the HTML:
@@ -36,7 +41,7 @@ $(document).ready(function () {
 
                     var _active = files.getActiveFiles(data);
                     var _html = $(sites.createTableRow( value, _active.length ) );
-                    var $checkInButton = $('<a/>').attr({ class: 'btn btn-outline-info float-right'}).html('Check In');
+                    var $checkInButton = $('<a/>').attr({ class: 'btn btn-outline-info btn-sm float-right'}).html('Check In');
                     
                     //add click event:
                     $checkInButton.on('click', function(){
@@ -51,8 +56,13 @@ $(document).ready(function () {
             });
 
         });
+    }
 
-    });
+
+    //event listeners:
+
+
+
 
 });
 
