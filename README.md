@@ -1,7 +1,6 @@
-# gadget-checkin
+# gadget-checkin v2.0.0
 
-This gadget displays the number of files currently checked out to the user in each site and
-gives the user the option to check them all back in.
+This gadget displays the number of files currently checked out to the user in each site and gives the user the option to check them all back in.
 
 **Still in Development.**
 
@@ -9,13 +8,11 @@ gives the user the option to check them all back in.
 
 ### Clone the repo and host locally
 
-Make sure [npm](https://www.npmjs.com/), [Bower](http://bower.io/), and [Gulp](http://gulpjs.com/) are installed on your machine.
+Make sure [npm](https://www.npmjs.com/), and [Gulp](http://gulpjs.com/) are installed on your machine.
 
 ```
 
 npm install
-
-bower install
 
 gulp
 
