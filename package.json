@@ -1,6 +1,6 @@
 {
   "name": "gadget-checkin",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "gadget to checkin pages from all sites",
   "main": "build/",
   
