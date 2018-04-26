@@ -36,40 +36,46 @@ $(document).ready(function () {
             
             // sort data by site name:
             var sorted = sites.sortData(data);
-            console.log("sorted", sorted);
+
             // format list of sites on the HTML:
             $.each(sorted, function(key, value) {
                 siteList.push(value.site);
-
                 loopThroughSite(value);
             });
         });
     }
 
     function loopThroughSite(value){
+
+        // write shell of row in alphebetical order:
+        var _html = $("#checkedOut tbody").append( $(sites.createTableRow( value ) ) );
+        $("#checkedOut tbody").append( _html );
+
         // get list of checkout files for each site:
         $.when( files.getFiles(value.site) ).done(function(data) {
 
             var _active = files.getActiveFiles(data);
-            var _html = $(sites.createTableRow( value, _active.length ) );
+            $(".site." + value.site).find('.count').append( _active.length + " files" );
+            $(".site." + value.site).addClass("count" + _active.length);
+
             var $checkInButton = $('<a/>').attr({ class: 'btn btn-outline-info btn-sm float-right'}).html('Check In');
             
             //add click event:
             $checkInButton.on('click', function(){
-                //files.checkInFiles(_active);
-                $(_html).find(".count").html("0 files");
-
+                files.checkInFiles(_active);
+                
+                // update 
+                $(".site." + value.site).find(".count").html("0 files");
+                
                 // add visibility classes:
+                $(".site." + value.site).addClass("count0");
                 if ($(".toggleSites").hasClass("active")){
-                    $(_html).addClass("visible");
-                }else{
-                    $(_html).addClass("invisible");
+                    $(".site." + value.site).addClass("visible");
                 }
             });
 
-            $(_html).find('.button').append( $checkInButton );
-            $("#checkedOut tbody").append( _html );
-
+            $(".site." + value.site).find('.button').append( $checkInButton );
+            //$("#checkedOut tbody").append( _html );
         });
     }
 
@@ -93,15 +99,11 @@ $(document).ready(function () {
         var _active = $(this).hasClass("active");
 
         $.each(siteList, function(key, value) {
-            if (_active){
-                if ($("." + value).hasClass("invisible")){
-                    $("." + value).removeClass("invisible");
+            if ($("." + value).hasClass("count0")){
+                if (_active){
                     $("." + value).addClass("visible");
-                }
-            }else{
-                if ($("." + value).hasClass("visible")){
+                }else{
                     $("." + value).removeClass("visible");
-                    $("." + value).addClass("invisible");
                 }
             }
         });

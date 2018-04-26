@@ -48,10 +48,10 @@
 	  		return sorted;
 	  	},
 
-	  	createTableRow : function(site, count){
-	  		var _invisible = (count == 0) ? ' invisible' : '';
+	  	createTableRow : function(site){
+	  		//var _invisible = (count == 0) ? ' invisible' : '';
 
-	  		return '<tr class="site ' + site.site + _invisible + '"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/' + gadget.account + '/' + site.site + '/" target="_parent">' + site.site + '</a></td><td width="20%" class="count">' + count + ' files</td><td width="20%" class="button"></td></tr>';
+	  		return '<tr class="site ' + site.site + '"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/' + gadget.account + '/' + site.site + '/" target="_parent">' + site.site + '</a></td><td width="20%" class="count"></td><td width="20%" class="button"></td></tr>';
 	  	}
 
 	}

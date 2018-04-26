@@ -28,6 +28,8 @@ table#checkedOut tr td {
 } 
 
 .invisible {display: none;}
+.count0 {display: none;}
+.count0.visible {display:table-row !important;}
 
 /* Match OU Campus styles: */
 a {color:#0077b1;}

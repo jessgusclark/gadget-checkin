@@ -47,7 +47,7 @@
 
 	  		$.each(_files, function(key, value) {
 	  			console.log("file", value.site, value.path);
-	  			checkInIndividualFile(value);
+	  			//checkInIndividualFile(value);
 	  		});
 
 	  	}
