@@ -15,6 +15,7 @@ $(document).ready(function () {
     var token;
 
     var checkedOutContent = [];
+    var siteList = [];
 
     // global vars:
     gadget.ready().then(gadget.fetch).then(function () {
@@ -36,6 +37,8 @@ $(document).ready(function () {
             // format list of sites on the HTML:
             $.each(data, function(key, value) {
 
+                siteList.push(value.site);
+
                 // get list of checkout files for each site:
                 $.when( files.getFiles(value.site) ).done(function(data) {
 
@@ -52,19 +55,40 @@ $(document).ready(function () {
                     $("#checkedOut tbody").append( _html );
 
                 });
-
             });
 
         });
     }
 
+    //create event listeners:s
+    $(".btn.toggleSites").on('click', function(){
 
-    //event listeners:
+        $(this).toggleClass("active");
+        var _active = $(this).hasClass("active");
 
+        $.each(siteList, function(key, value) {
+            if (_active){
+                if ($("." + value).hasClass("invisible")){
+                    $("." + value).removeClass("invisible");
+                    $("." + value).addClass("visible");
+                }
+            }else{
+                if ($("." + value).hasClass("visible")){
+                    $("." + value).removeClass("visible");
+                    $("." + value).addClass("invisible");
+                }
+            }
+        });
 
-
+        /*$(".site", this).each(function() {
+        //$(".tr.site").each(function(){
+            console.log("i", this);
+        })*/
+    });
 
 });
+
+
 
 $(gadget).on({
     'expanded': function (evt) {
