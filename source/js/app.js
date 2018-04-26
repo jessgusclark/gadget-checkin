@@ -11,10 +11,7 @@ $(document).ready(function () {
         
         If you don't need the config data, you don't need to call gadget.fetch().
     */
-    var apihost;
-    var token;
 
-    var checkedOutContent = [];
     var siteList = [];
 
     // global vars:
@@ -31,6 +28,7 @@ $(document).ready(function () {
 
     });
 
+    // get the sites that are located in the account
     function getSitesInAccount(){
         $.when( sites.getSites() ).done(function(data) {
             
@@ -40,12 +38,13 @@ $(document).ready(function () {
             // format list of sites on the HTML:
             $.each(sorted, function(key, value) {
                 siteList.push(value.site);
-                loopThroughSite(value);
+                getSiteInformation(value);
             });
         });
     }
 
-    function loopThroughSite(value){
+    // find the files associated with the site
+    function getSiteInformation(value){
 
         // write shell of row in alphebetical order:
         var _html = $("#checkedOut tbody").append( $(sites.createTableRow( value ) ) );
@@ -62,16 +61,7 @@ $(document).ready(function () {
             
             //add click event:
             $checkInButton.on('click', function(){
-                files.checkInFiles(_active);
-                
-                // update 
-                $(".site." + value.site).find(".count").html("0 files");
-                
-                // add visibility classes:
-                $(".site." + value.site).addClass("count0");
-                if ($(".toggleSites").hasClass("active")){
-                    $(".site." + value.site).addClass("visible");
-                }
+                checkInButtonClick(_active);
             });
 
             $(".site." + value.site).find('.button').append( $checkInButton );
@@ -79,8 +69,31 @@ $(document).ready(function () {
         });
     }
 
+    // check back in files:
+    function checkInButtonClick(_activeFiles){
+        // can't check in what isn't checked out
+        if (_activeFiles.length == 0) return;
 
-    //create event listeners:
+        // get site from first _activeFile;
+        var _site = _activeFiles[0].site;
+
+        // cehck in files:
+        files.checkInFiles(_activeFiles);
+                
+        // update visuals:
+        $(".site." + _site).find(".count").html("0 files");
+        
+        $(".site." + _site).addClass("count0");
+        if ($(".toggleSites").hasClass("active")){
+            $(".site." + _site).addClass("visible");
+        }
+
+    }
+
+    //
+    // EVENT LISTENERS
+    //
+
     $(".btn.checkInAll").on('click', function(){
         $.each(siteList, function(key, value) {
             _button = $("." + value).not('.visible').not('.invisible').find("a.btn").click();
