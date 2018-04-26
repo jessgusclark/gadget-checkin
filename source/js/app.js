@@ -34,8 +34,11 @@ $(document).ready(function () {
                 // get list of checkout files for each site:
                 $.when( files.getFiles(value.site) ).done(function(data) {
                     console.log(value.site, data);
+
+                    var _active = files.getActiveFiles(data);
+
                     $("#checkedOut tbody").append(
-                        sites.createTableRow(value, data.length)
+                        sites.createTableRow( value, _active.length )
                     );
                 });
 

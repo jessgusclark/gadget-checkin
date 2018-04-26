@@ -37,4 +37,18 @@ describe('test sites', function() {
 
 	});
 
+	it('should ignore files that are scheduled, expired and underworkflow', function(){
+
+		var sampleData = [
+			{"is_scheduled_to_publish":true,"is_scheduled_to_expire":false,"pending_approval":false},
+			{"is_scheduled_to_publish":false,"is_scheduled_to_expire":true,"pending_approval":false},
+			{"is_scheduled_to_publish":false,"is_scheduled_to_expire":false,"pending_approval":true},
+			{"is_scheduled_to_publish":false,"is_scheduled_to_expire":false,"pending_approval":false}
+		];
+
+		assert.equal(1, app.files.getActiveFiles(sampleData).length );
+
+	})
+
+
 });

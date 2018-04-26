@@ -24,6 +24,22 @@
 			});
 
 			return deferred.promise();
+	  	},
+	  	getActiveFiles : function(pages){
+	  		var activeFiles = [];
+
+	  		$.each(pages, function(key, value) {
+
+	  			if (!value.is_scheduled_to_publish && 
+	  				!value.is_scheduled_to_expire && 
+	  				!value.pending_approval){
+		  				
+		  				activeFiles.push(value);
+
+		  		}
+	  		});
+
+	  		return activeFiles;
 	  	}
 
 	}

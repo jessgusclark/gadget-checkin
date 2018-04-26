@@ -8,7 +8,6 @@ global.jQuery = global.$ = require("jquery");
 var assert = require('chai').assert;
 var app = require('../source/js/sites.js');
 
-
 global.gadget = {account : "TEST"}
 
 var sandbox;
@@ -38,11 +37,11 @@ describe('test sites', function() {
 
 	it('should return a table row with formatted content', function(){
 		// expected site www, account TEST
-		var expected = '<tr class="site www"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/TEST/www/" target="_parent">www</a></td><td class="count">16 files</td><td><a class="btn btn-default btn-sm check-in pull-right">Check In</a></td></tr>';
+		var expected = '<tr class="site www"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/TEST/www/" target="_parent">www</a></td><td width="20%" class="count">2 files</td><td width="20%"><a class="btn btn-outline-info float-right">Check In</a></td></tr>';
 
 		var site = {"site":"www"}
-
-		assert.equal(expected, app.sites.createTableRow(site, 16));
+		
+		assert.equal(expected, app.sites.createTableRow(site, 2));
 
 	});
 
