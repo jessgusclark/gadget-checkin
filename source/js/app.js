@@ -50,6 +50,7 @@ $(document).ready(function () {
                     $checkInButton.on('click', function(){
                         //files.checkInFiles(_active);
                         $(_html).find(".count").html("0 files");
+
                         // add visibility classes:
                         if ($(".toggleSites").hasClass("active")){
                             $(_html).addClass("visible");
@@ -68,6 +69,12 @@ $(document).ready(function () {
     }
 
     //create event listeners:
+    $(".btn.checkInAll").on('click', function(){
+        $.each(siteList, function(key, value) {
+            _button = $("." + value).not('.visible').not('.invisible').find("a.btn").click();
+        });
+    });
+
     $(".btn.refresh").on('click', function(){
         $("#checkedOut tbody").html("");
         $(".toggleSites").removeClass("active");
