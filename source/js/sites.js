@@ -49,20 +49,11 @@
 	  	},
 
 	  	createTableRow : function(site){
-	  		//var _invisible = (count == 0) ? ' invisible' : '';
 
 	  		return '<tr class="site ' + site.site + '"><td class="site"><a href="https://a.cms.omniupdate.com/10/#oucampus/' + gadget.account + '/' + site.site + '/" target="_parent">' + site.site + '</a></td><td width="20%" class="count"></td><td width="20%" class="button"></td></tr>';
 	  	}
 
 	}
-
-
-	/*function sortObjectKeys(obj){
-	    return Object.keys(obj).sort().reduce((acc,key)=>{
-	        acc[key]=obj[key];
-	        return acc;
-	    },{});
-	}*/
 
 	exports.sites = sites;
 

@@ -43,7 +43,6 @@
 	  	},
 
 	  	checkInFiles : function(_files){
-	  		console.log( "checking in files!!", _files );
 
 	  		$.each(_files, function(key, value) {
 	  			console.log("file", value.site, value.path);
