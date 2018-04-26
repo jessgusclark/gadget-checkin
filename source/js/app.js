@@ -48,7 +48,14 @@ $(document).ready(function () {
                     
                     //add click event:
                     $checkInButton.on('click', function(){
-                        files.checkInFiles(_active);
+                        //files.checkInFiles(_active);
+                        $(_html).find(".count").html("0 files");
+                        // add visibility classes:
+                        if ($(".toggleSites").hasClass("active")){
+                            $(_html).addClass("visible");
+                        }else{
+                            $(_html).addClass("invisible");
+                        }
                     });
 
                     $(_html).find('.button').append( $checkInButton );
@@ -60,7 +67,13 @@ $(document).ready(function () {
         });
     }
 
-    //create event listeners:s
+    //create event listeners:
+    $(".btn.refresh").on('click', function(){
+        $("#checkedOut tbody").html("");
+        $(".toggleSites").removeClass("active");
+        getCheckedOutContent();
+    })
+
     $(".btn.toggleSites").on('click', function(){
 
         $(this).toggleClass("active");
@@ -80,10 +93,6 @@ $(document).ready(function () {
             }
         });
 
-        /*$(".site", this).each(function() {
-        //$(".tr.site").each(function(){
-            console.log("i", this);
-        })*/
     });
 
 });
