@@ -12,7 +12,7 @@ table#checkedOut thead th {
 
 table#checkedOut tbody {
   display: inline-block;
-  width: 373px;
+  width: 100%;
   height: 228px;
   overflow-y: auto; }
 
