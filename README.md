@@ -4,7 +4,7 @@ This gadget displays the number of files currently checked out to the user in ea
 
 ![two demos of what the checkin gadget looks like](docs/checkin-demo.jpg)
 
-## Version v1.0.0
+## Version v1.0.1
 
 No longer in development, v1 is ready for prime time! It has been a little over two years since this gadget has been refreshed. The latest version includes fixes to prevent files being checked in that are under workflow, scheduled or set to expire. Also, it has gone back to being exclusively a dashboard gadget as the sidebar functionality was causing some issues on the dashboard.
 
