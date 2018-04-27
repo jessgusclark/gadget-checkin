@@ -19,7 +19,7 @@ afterEach(function() {
 
 global.gadget = {account : "TEST"}
 
-	describe('test sites', function() {
+	describe('test files', function() {
 
 		it('should pull list of files data from stub', function(){
 		
