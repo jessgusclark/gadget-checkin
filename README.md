@@ -39,4 +39,12 @@ Yes! Fork and put in a pull request with information about what was changed and 
 
 ## Troubleshooting
 
-Report issues in the issues tab.Please report any issues in the issues tab. Be as descriptive as possible including how to reproduce the error.
+Report issues in the issues tab. Please report any issues in the issues tab. Be as descriptive as possible including how to reproduce the error.
+
+### "Known" issue, sorta, not really...
+
+Gadgets are not able to update other gadgets on the dashboard. When you click on "Check In" with the _CheckIn Gadget_ it can't access the OU Campus's _My Checked-Out Content_ gadget. So the files in OU's gadget will still look like they are checked out when they aren't. You can verify that they are checked in my refreshing just that widget. This is kinda a bug, but kinda isn't. 
+
+After clicking "Checkin All" with the _CheckIn Gadget_ the _My Checked-Out Content_ still shows checked out files:
+
+![demo of the My Checked-Out Content gadget and the CheckIn Gadget](docs/checked-out-content-gadget-example.jpg)
