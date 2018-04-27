@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "gadget to checkin pages from all sites",
   "main": "build/",
-  
   "scripts": {
     "test": "gulp test-nocats"
   },
@@ -30,8 +29,8 @@
     "OUcampus",
     "OmniUpdate"
   ],
-  "author": "Jesse & Jeff",
-  "license": "BSD-2-Clause",
+  "author": "Jesse Clark",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jessgusclark/gadget-checkin/issues"
   }
