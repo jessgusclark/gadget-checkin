@@ -1,10 +1,8 @@
-# gadget-checkin v1.0.0
-
-![build status][https://travis-ci.org/jessgusclark/gadget-checkin.svg?branch=master]
+# gadget-checkin v1.0.0 [![Build Status](https://travis-ci.org/jessgusclark/gadget-checkin.svg?branch=master)](https://travis-ci.org/jessgusclark/gadget-checkin)
 
 This gadget displays the number of files currently checked out to the user in each site and gives the user the option to check them all back in.
 
-![two demos of what the checkin gadget looks like][docs/checkin-demp/jpg]
+![two demos of what the checkin gadget looks like](docs/checkin-demo.jpg)
 
 ## Version v1.0.0
 
