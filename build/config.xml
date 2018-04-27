@@ -11,7 +11,7 @@
     <entry key="description" private="true">CheckIn multiple pieces of content at once.</entry>
     
     <!-- The URL of a thumbnail image to appear in the gadget chooser. -->
-    <entry key="thumbnail" private="true">http://fakeimg.pl/96/</entry>
+    <entry key="thumbnail" private="true">http://jessgusclark.github.io/gadget-checkin/docs/thumb.jpg</entry>
     
     <!-- Current supported types are "dashboard" and "sidebar". If you want your gadget to appear
          in both places, enter "dashboard, sidebar". -->
