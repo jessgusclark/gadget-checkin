@@ -50,13 +50,17 @@ $(document).ready(function () {
 
             var checkInButton = $('<a/>').attr({ class: 'btn btn-outline-info btn-sm float-right'}).html('Check In');
             
-            //add click event:
-            checkInButton.on('click', function(){
-                checkInButtonClick(_active);
-            });
+            if (_active.length == 0){
+                //add disabled class to sites with 0 files:
+                $(checkInButton).addClass("disabled");
+            }else{
+                //add click event to site with files checked out:
+                checkInButton.on('click', function(){
+                    checkInButtonClick(_active);
+                });
+            }
 
             $(".site." + value.site).find('.button').append( checkInButton );
-            //$("#checkedOut tbody").append( _html );
         });
     }
 
@@ -73,6 +77,7 @@ $(document).ready(function () {
                 
         // update visuals:
         $(".site." + _site).find(".count").html("0 files");
+        $(".site." + _site).find(".btn").addClass("disabled");
         
         $(".site." + _site).addClass("count0");
         if ($(".toggleSites").hasClass("active")){
