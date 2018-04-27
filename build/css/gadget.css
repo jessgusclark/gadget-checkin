@@ -1,0 +1,41 @@
+/*! Gadget Specific Styles*/
+body {
+  /*margin: 10px;*/
+  background-color: transparent; }
+
+table#checkedOut {
+  width: 100%; }
+
+table#checkedOut thead th {
+  padding: 2px 5px;
+  border-bottom: 2px solid #737676; }
+
+table#checkedOut tbody {
+  display: inline-block;
+  width: 373px;
+  height: 228px;
+  overflow-y: auto; }
+
+table#checkedOut tr td {
+  padding: 2px 5px;
+  border-bottom: 1px solid #ebebeb; }
+
+.invisible {
+  display: none; }
+
+.count0 {
+  display: none; }
+
+.count0.visible {
+  display: table-row !important; }
+
+.btn-outline-dark:not(:disabled):not(.disabled).active, .btn-outline-dark:hover {
+  background-color: #ffc107 !important;
+  border-color: #fff !important; }
+
+/* Match OU Campus styles: */
+a {
+  color: #0077b1; }
+
+td {
+  font-size: 14px; }
