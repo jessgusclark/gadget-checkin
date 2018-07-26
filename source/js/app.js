@@ -13,7 +13,7 @@ $(document).ready(function () {
     }).fail(function(err){
         // gadget.ready failed, display a message:
         if (err.responseText.code = "SESSION_NOT_FOUND"){
-            $("#checkedOut tbody").append('<tr colspan="3"><td><strong>Error (SESSION_NOT_FOUND)</strong><br/> This can happen when your authorization token has expired. Please try refreshing the entire page.</td></tr>');
+            $("#checkedOut tbody").append('<tr colspan="3"><td><strong>Error (SESSION_NOT_FOUND)</strong><br/> This can happen when your authorization token has expired. Please try <a href="#" onClick="parent.location.reload();">refreshing the entire page</a>.</td></tr>');
         }
 
         console.log("gadget.ready fail!", err);
